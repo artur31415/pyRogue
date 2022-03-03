@@ -47,6 +47,7 @@ while running:
     # Fill the background with white
     screen.fill((255, 255, 255))
 
+    
 
     textsurface = myfont.render('Ticks = ' + str(ticks), False, (0, 0, 0))
     screen.blit(textsurface, (0, 0))
