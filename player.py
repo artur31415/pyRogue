@@ -30,8 +30,8 @@ class Player:
         return result
 
     def draw(self, surface):
-        top_p = (self.position.x + self.width / 2, self.position.y)
-        bottom_left_p = (self.position.x, self.position.y + self.width)
-        bottom_right_p = (self.position.x + self.width, self.position.y + self.width)
+        top_p = (self.position[0] + self.width / 2, self.position[1])
+        bottom_left_p = (self.position[0], self.position[1] + self.width)
+        bottom_right_p = (self.position[0] + self.width, self.position[1] + self.width)
         
         pygame.draw.polygon(surface, (100, 50, 100),[top_p, bottom_left_p, bottom_right_p])
