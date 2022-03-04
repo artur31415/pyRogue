@@ -7,9 +7,17 @@ class Player:
         self.position = position
         self.width = 20
         self.orientation = 0
+        self.energy = 100
+
+    def shoot(self):
+        return self.get_position_normal()
+
+    def get_position_normal(self):
+        return (math.cos(self.orientation), math.sin(self.orientation))
 
     def apply_veclocity_mag(self, magnitude):
-        vel = (magnitude * math.cos(self.orientation), magnitude * math.sin(self.orientation))
+        normal = self.get_position_normal()
+        vel = (magnitude * normal[0], magnitude * normal[1])
         self.position = (self.position[0] + vel[0], self.position[1] + vel[1])
     
     def get_triangle_points(self):
@@ -26,10 +34,6 @@ class Player:
         return result
 
     def draw(self, surface):
-        # top_p = (self.position[0] + self.width / 2, self.position[1])
-        # bottom_left_p = (self.position[0], self.position[1] + self.width)
-        # bottom_right_p = (self.position[0] + self.width, self.position[1] + self.width)
-
         triangle_points = self.get_triangle_points()
         
         pygame.draw.polygon(surface, (100, 50, 100),triangle_points)

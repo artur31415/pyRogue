@@ -27,6 +27,7 @@ ticks = 0
 actual_player = Player((width / 2, height / 2))
 move_increment = 10
 orientation_increment = math.pi / 16
+force_increment = 0.1
 ################################################################################################
 #                                           FUNCTIONS
 ################################################################################################
@@ -36,28 +37,40 @@ orientation_increment = math.pi / 16
 ################################################################################################
 
 while running:
+    keys = pygame.key.get_pressed() 
+    if keys[pygame.K_w]: 
+        actual_player.apply_veclocity_mag(force_increment)
+    elif keys[pygame.K_s]: 
+        actual_player.apply_veclocity_mag(-force_increment)
+
+    if keys[pygame.K_q]: 
+        actual_player.orientation -= orientation_increment
+    elif keys[pygame.K_e]: 
+        actual_player.orientation += orientation_increment
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:
-                actual_player.apply_veclocity_mag(2)
-            elif event.key == pygame.K_s:
-                actual_player.apply_veclocity_mag(-2)
+            # if event.key == pygame.K_w:
+            #     actual_player.apply_veclocity_mag(2)
+            # elif event.key == pygame.K_s:
+            #     actual_player.apply_veclocity_mag(-2)
 
             #TODO: IMPLEMENT ROTATION
-            if event.key == pygame.K_q:
-                actual_player.orientation -= orientation_increment
-            elif event.key == pygame.K_e:
-                actual_player.orientation += orientation_increment
+            # if event.key == pygame.K_q:
+            #     actual_player.orientation -= orientation_increment
+            # elif event.key == pygame.K_e:
+            #     actual_player.orientation += orientation_increment
 
             if event.key == pygame.K_SPACE:
                 #TODO: MAYBE CATCH MINERAL
                 pass
             if event.key == pygame.K_f:
                 #TODO: MAYBE ATTACK
-                pass
+                normal_vector = actual_player.shoot()
+                
 
 
     ##################################################################
