@@ -6,32 +6,30 @@ class Player:
     def __init__(self, position) -> None:
         self.position = position
         self.width = 20
+        self.orientation = 0
+
+    def apply_veclocity_mag(self, magnitude):
+        vel = (magnitude * math.cos(self.orientation), magnitude * math.sin(self.orientation))
+        self.position = (self.position[0] + vel[0], self.position[1] + vel[1])
     
-    def get_points(center, radius, mouse_position):
-        # calculate the normalized vector pointing from center to mouse_position
-        length = math.hypot(mouse_position[0] - center[0], mouse_position[1] - center[1])
-        # (note we only need the x component since y falls 
-        # out of the dot product, so we won't bother to calculate y)
-        angle_vector_x = (mouse_position[0] - center[0]) / length
-
-        # calculate the angle between that vector and the x axis vector (aka <1,0> or i)
-        angle = math.acos(angle_vector_x)
-
+    def get_triangle_points(self):
         # list of un-rotated point locations
         triangle = [0, (3 * math.pi / 4), (5 * math.pi / 4)]
 
         result = list()
         for t in triangle:
             # apply the circle formula
-            x = center[0] + radius * math.cos(t + angle)
-            y = center[1] + radius * math.sin(t + angle)
+            x = self.position[0] + self.width * math.cos(t + self.orientation)
+            y = self.position[1] + self.width * math.sin(t + self.orientation)
             result.append((x, y))
 
         return result
 
     def draw(self, surface):
-        top_p = (self.position[0] + self.width / 2, self.position[1])
-        bottom_left_p = (self.position[0], self.position[1] + self.width)
-        bottom_right_p = (self.position[0] + self.width, self.position[1] + self.width)
+        # top_p = (self.position[0] + self.width / 2, self.position[1])
+        # bottom_left_p = (self.position[0], self.position[1] + self.width)
+        # bottom_right_p = (self.position[0] + self.width, self.position[1] + self.width)
+
+        triangle_points = self.get_triangle_points()
         
-        pygame.draw.polygon(surface, (100, 50, 100),[top_p, bottom_left_p, bottom_right_p])
+        pygame.draw.polygon(surface, (100, 50, 100),triangle_points)

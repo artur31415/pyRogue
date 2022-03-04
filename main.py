@@ -1,3 +1,4 @@
+import math
 import pygame
 from random import *
 
@@ -25,6 +26,7 @@ ticks = 0
 
 actual_player = Player((width / 2, height / 2))
 move_increment = 10
+orientation_increment = math.pi / 16
 ################################################################################################
 #                                           FUNCTIONS
 ################################################################################################
@@ -39,16 +41,16 @@ while running:
             running = False
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
-                actual_player.position[0] -= move_increment
-            elif event.key == pygame.K_d:
-                actual_player.position[0] += move_increment
+            if event.key == pygame.K_w:
+                actual_player.apply_veclocity_mag(2)
+            elif event.key == pygame.K_s:
+                actual_player.apply_veclocity_mag(-2)
 
             #TODO: IMPLEMENT ROTATION
             if event.key == pygame.K_q:
-                pass
+                actual_player.orientation -= orientation_increment
             elif event.key == pygame.K_e:
-                pass
+                actual_player.orientation += orientation_increment
 
             if event.key == pygame.K_SPACE:
                 #TODO: MAYBE CATCH MINERAL
